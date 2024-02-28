@@ -23,6 +23,7 @@
     cursor: pointer;
     margin: 10px 0;
     font-size: 20px;
+    border-radius: 10px;
 }
 form .display{
     justify-content: flex-end;

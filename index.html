@@ -21,13 +21,13 @@
                 </div>
                 <div>
                     <input type="button" value="7" onclick="appendToDisplay('7')" class="operator">
-                    <input type="button" value="8" onclick="appendToDisplay('8')" class="operator">
+                    <input type="button" value="8" onclick="appendToDisplay('8')"class="operator">
                     <input type="button" value="9" onclick="appendToDisplay('9')" class="operator">
                     <input type="button" value="*" onclick="appendCharacter('*')" class="operator">
                 </div>
                 <div>
                     <input type="button" value="4" onclick="appendToDisplay('4')" class="operator">
-                    <input type="button" value="5" onclick="appendToDisplay('5')" class="operator">
+                    <input type="button" value="5" onclick="appendToDisplay('5')"class="operator">
                     <input type="button" value="6" onclick="appendToDisplay('6')" class="operator">
                     <input type="button" value="-" onclick="appendCharacter('-')" class="operator">
                 </div>
@@ -47,49 +47,36 @@
     </div>
     <script>
         var display = document.getElementById('display');
-        var result = 0; // Variabel untuk menyimpan hasil
-
-        function clearDisplay() {
-            display.value = '';
-            result = 0; // Reset hasil
-        }
-
-        function deleteCharacter() {
-            display.value = display.value.slice(0, -1);
-        }
-
+        var result = 0;
         function percent() {
-            display.value = display.value / 100;
+            display.value=display.value/ 100;
         }
-
         function appendToDisplay(value) {
-            // Mencegah tanda titik (.) dan 0 (nol) di awal kalkulator
             if (display.value === '' && (value === '.' || value === '0')) {
                 return;
             }
-
-            // Mencegah tombol operasi matematika di awal kalkulator
-            if (display.value === '' && (value === '+' || value === '-' || value === '*' || value === '/')) {
+            if (display.value === '' && (value === '+' || value === '-'|| value === '/'|| value === '*')) {
+                return;
+            }
+            var lastChar = display.value.slice(-1);
+            if ((value === '+' || value === '-' || value === '*' || value === '/') &&
+                (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/')) {
                 return;
             }
 
             display.value += value;
         }
-
         function appendCharacter(char) {
             var lastChar = display.value.slice(-1);
-
-            // Jika karakter terakhir adalah operator matematika, ganti operator tersebut dengan yang baru
-            if (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/') {
-                display.value = display.value.slice(0, -1) + char;
-            }
-            // Jika karakter terakhir adalah angka atau desimal, tambahkan operator matematika baru
-            else if (!isNaN(lastChar) || lastChar === '.') {
-                display.value += char;
-            }
+                if (display.value === '' && (value === '+' || value === '-' || value === '*' || value === '/')) {
+                    return;
+                }
+                if (lastChar ==='+' || lastChar ==='-' || lastChar === '/' || lastChar === '*') {
+                    display.value = display.value.slice(0,-1)+char;
+                }else if (!isNaN(lastChar) || lastChar === '.') {
+                    display.value += char;
+                }
         }
-
-
         function calculateResult() {
             try {
                 result = eval(display.value);
@@ -97,6 +84,14 @@
             } catch (error) {
                 display.value = 'Error';
             }
+        }
+        function clearDisplay() {
+            display.value = '';
+            result = 0; // Reset hasil
+        }
+
+        function deleteCharacter() {
+            display.value = display.value.slice(0, -1);
         }
     </script>
 </body>
